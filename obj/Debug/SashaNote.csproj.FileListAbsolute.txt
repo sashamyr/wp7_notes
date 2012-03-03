@@ -1,0 +1,15 @@
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\Bin\Debug\ApplicationIcon.png
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\Bin\Debug\Background.png
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\Bin\Debug\SashaNote.dll
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\Bin\Debug\SashaNote.pdb
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\Bin\Debug\AppManifest.xaml
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\Bin\Debug\SashaNote.xap
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\ResolveAssemblyReference.cache
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\App.g.i.cs
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\Add.g.i.cs
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\MainPage.g.i.cs
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\ViewEdit.g.i.cs
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\SashaNote.g.resources
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\SashaNote.dll
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\SashaNote.pdb
+c:\users\sasha\documents\visual studio 2010\Projects\SashaNote\SashaNote\obj\Debug\XapCacheFile.xml

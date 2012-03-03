@@ -1,0 +1,9 @@
+This app was created for educationla purposes only.
+
+This app can store notes in your phone, adding location to every very note (via GPS). This app should be fully functional on any Windows Phone 7 device (installation via .xap file).
+
+In this app features:
+- IsolatedStorage to store notes
+- Geograpical Positioning Service to work with location
+
+Sasha Buyanov, 2012.
