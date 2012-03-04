@@ -152,6 +152,7 @@
     </None>
     <None Include="Service References\myTerraService\TerraService2.wsdl" />
     <Content Include="Images\appbar.back.rest.png" />
+    <Resource Include="Images\appbar.close.rest.png" />
     <Content Include="Images\appbar.delete.rest.png" />
     <Content Include="Images\appbar.edit.rest.png" />
     <Content Include="ServiceReferences.ClientConfig" />

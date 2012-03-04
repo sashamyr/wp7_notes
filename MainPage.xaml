@@ -47,8 +47,41 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
-            
+
+            <Canvas Name="helpCanvas"
+                    Background="White"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Width="400"
+                    Height="400"
+                    Visibility="Collapsed" >
+                
+                <Button Name="helpCloseButton" 
+                        Canvas.Left="342" 
+                        Canvas.Top="0" 
+                        Height="50" 
+                        Width="50"
+                        Click="helpCloseButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/SashaNote;component/Images/appbar.close.rest.png" Stretch="None" />
+                    </Button.Background>
+                </Button>
+                <ScrollViewer Name="helpScrollviewer"
+                              Width="300"
+                              Height="300"
+                              Canvas.Left="50"
+                              Canvas.Top="50" >
+
+                    <TextBlock Name="helpTextBlock"
+                               Foreground="Black" 
+                               TextWrapping="Wrap"
+                               FontSize="24"
+                               Height="500"
+                               >
+                        Hello world!
+                    </TextBlock>
+                </ScrollViewer>
+            </Canvas>
         </Grid>
     </Grid>
  
@@ -56,7 +89,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Images/appbar.add.rest.png" Text="add" Click="AppBar_Add_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar.questionmark.rest.png" Text="help"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.questionmark.rest.png" Text="help" Click="AppBar_Help_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

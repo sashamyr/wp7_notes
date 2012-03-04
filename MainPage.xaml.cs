@@ -59,17 +59,40 @@ namespace SashaNote
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
+            // Determine the state of the application when last used
+            // and restore the state. I'll simply read the app settings
+            // 'state' property and navigate accordingly. Each page 
+            // and settings the state once again
 
-            string[] fileList = appStorage.GetFileNames();
+            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
-            foreach (string file in fileList)
+            string state = "";
+            if (settings.Contains("state"))
             {
-                bindList();
-
-
+                if (settings.TryGetValue<string>("state", out state))
+                {
+                    if (state == "add")
+                    {
+                        NavigationService.Navigate(new Uri("/SashaNote;component/Add.xaml", UriKind.Relative));
+                    }
+                    else if (state == "edit")
+                    {
+                        NavigationService.Navigate(new Uri("/SashaNote;component/ViewEdit.xaml", UriKind.Relative));
+                    }
+                }
             }
+            
+            bindList();
+            
+            // Old way creater for testing purposes
+            //var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
 
+            //string[] fileList = appStorage.GetFileNames();
+
+            //foreach (string file in fileList)
+            //{
+            //    bindList();
+            //}
         }
 
         private void bindList()
@@ -83,30 +106,32 @@ namespace SashaNote
 
             foreach (string file in fileList)
             {
-                // Retrieve the file
-                string fileName = file;
+                if (file != "__ApplicationSettings")
+                {
 
+                    // Retrieve the file
+                    string fileName = file;
 
-                // Pluck out the date parts
-                string year = file.Substring(0, 4);
-                string month = file.Substring(5, 2);
-                string day = file.Substring(8, 2);
-                string hour = file.Substring(11, 2);
-                string minute = file.Substring(14, 2);
-                string second = file.Substring(17, 2);
+                    // Pluck out the date parts
+                    string year = file.Substring(0, 4);
+                    string month = file.Substring(5, 2);
+                    string day = file.Substring(8, 2);
+                    string hour = file.Substring(11, 2);
+                    string minute = file.Substring(14, 2);
+                    string second = file.Substring(17, 2);
 
-                // Create a new DateTime object
-                DateTime dateCreated = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day), int.Parse(hour), int.Parse(minute), int.Parse(second), 0);
+                    // Create a new DateTime object
+                    DateTime dateCreated = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day), int.Parse(hour), int.Parse(minute), int.Parse(second), 0);
 
-                // Parse out the location
-                string location = file.Substring(20);
-                location = location.Replace("_", ", ");
-                location = location.Replace("-", " ");
-                location = location.Substring(0, location.Length - 4);
+                    // Parse out the location
+                    string location = file.Substring(20);
+                    location = location.Replace("_", ", ");
+                    location = location.Replace("-", " ");
+                    location = location.Substring(0, location.Length - 4);
 
-                notes.Add(new note() { location = location, DateCreated = dateCreated.ToLongDateString(), FileName = fileName});
+                    notes.Add(new note() { location = location, DateCreated = dateCreated.ToLongDateString(), FileName = fileName });
+                }
             }
-
             noteListBox.ItemsSource = notes;
         }
 
@@ -117,6 +142,16 @@ namespace SashaNote
             string uri = String.Format("/SashaNote;component/ViewEdit.xaml?id={0}", clickedLink.Tag);
 
             NavigationService.Navigate(new Uri(uri, UriKind.Relative));
+        }
+
+        private void AppBar_Help_Click(object sender, EventArgs e)
+        {
+            helpCanvas.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void helpCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            helpCanvas.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

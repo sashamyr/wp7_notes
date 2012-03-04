@@ -19,6 +19,8 @@ namespace SashaNote
 {
     public partial class Add : PhoneApplicationPage
     {
+
+        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private string location = "";
 
         public Add()
@@ -104,12 +106,52 @@ namespace SashaNote
 
         private void navigateBack()
         {
+            // Reset the application state used to ensure that the application
+            // re-opens in the correct state
+
+            settings["state"] = "";
+            settings["value"] = "";
+
             NavigationService.Navigate(new Uri("/SashaNote;component/MainPage.xaml", UriKind.Relative));
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            // Firstly check to make sure we're note returning
+            // from an interrupted session, redirected from
+            // MainPage.xaml. We'll check IsolatedStorageSettings.
+
+            
+
+            string state = "";
+            if (settings.Contains("state"))
+            {
+                if (settings.TryGetValue<string>("state", out state))
+                {
+                    if (state == "add")
+                    {
+                        string value = "";
+                        if (settings.Contains("value"))
+                        {
+                            if (settings.TryGetValue<string>("value", out value))
+                            {
+                                editTextBox.Text = value;
+                            }
+                        }
+                    }
+                }
+            }
+
+            settings["state"] = "add";
+            settings["value"] = editTextBox.Text;
+
             editTextBox.Focus();
+            editTextBox.SelectionStart = editTextBox.Text.Length;
+        }
+
+        private void editTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            settings["value"] = editTextBox.Text;
         }
     }
 }
