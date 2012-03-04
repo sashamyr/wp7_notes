@@ -27,26 +27,32 @@ namespace SashaNote
         {
             InitializeComponent();
 
-            GeoCoordinateWatcher myWatcher = new GeoCoordinateWatcher();
-
-            var myPosition = myWatcher.Position;
-           
-            double latitude = 47.674;
-            double longitude = -122.12;
-
-
-            if (!myPosition.Location.IsUnknown)
+            try
             {
-                latitude = myPosition.Location.Latitude;
-                longitude = myPosition.Location.Longitude;
+                GeoCoordinateWatcher myWatcher = new GeoCoordinateWatcher();
+
+                var myPosition = myWatcher.Position;
+
+                double latitude = 47.674;
+                double longitude = -122.12;
+
+
+                if (!myPosition.Location.IsUnknown)
+                {
+                    latitude = myPosition.Location.Latitude;
+                    longitude = myPosition.Location.Longitude;
+                }
+
+                myTerraService.TerraServiceSoapClient client = new myTerraService.TerraServiceSoapClient();
+
+                client.ConvertLonLatPtToNearestPlaceCompleted += new EventHandler<myTerraService.ConvertLonLatPtToNearestPlaceCompletedEventArgs>(client_ConvertLonLatPtToNearestPlaceCompleted);
+
+                client.ConvertLonLatPtToNearestPlaceAsync(new myTerraService.LonLatPt() { Lat = latitude, Lon = longitude });
             }
-
-            myTerraService.TerraServiceSoapClient client = new myTerraService.TerraServiceSoapClient();
-
-            client.ConvertLonLatPtToNearestPlaceCompleted += new EventHandler<myTerraService.ConvertLonLatPtToNearestPlaceCompletedEventArgs>(client_ConvertLonLatPtToNearestPlaceCompleted);
-
-            client.ConvertLonLatPtToNearestPlaceAsync(new myTerraService.LonLatPt() { Lat = latitude, Lon = longitude });
-
+            catch
+            {
+                // To be implemented
+            }
         }
 
         void client_ConvertLonLatPtToNearestPlaceCompleted(object sender, myTerraService.ConvertLonLatPtToNearestPlaceCompletedEventArgs e)
@@ -92,13 +98,22 @@ namespace SashaNote
             // Now we have everything we need  to write the file to Isolated Storage
             var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
 
-            using (var fileStream = appStorage.OpenFile(sb.ToString(), System.IO.FileMode.Create))
+
+            try
             {
-                using (StreamWriter sw = new StreamWriter(fileStream))
+                using (var fileStream = appStorage.OpenFile(sb.ToString(), System.IO.FileMode.Create))
                 {
-                    sw.WriteLine(editTextBox.Text);
+                    using (StreamWriter sw = new StreamWriter(fileStream))
+                    {
+                        sw.WriteLine(editTextBox.Text);
+                    }
                 }
             }
+            catch
+            {
+                // To be implemented
+            }
+            
 
             // Finished, navigate back to the MainPage
             navigateBack();

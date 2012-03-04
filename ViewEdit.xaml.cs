@@ -45,13 +45,23 @@ namespace SashaNote
             {
                 var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
 
-                using (var file = appStorage.OpenFile(fileName, FileMode.Create))
+                try
                 {
-                    using (StreamWriter sw = new StreamWriter(file))
+                    using (var file = appStorage.OpenFile(fileName, FileMode.Create))
                     {
-                        sw.WriteLine(editTextBox.Text);
+                        using (StreamWriter sw = new StreamWriter(file))
+                        {
+                            sw.WriteLine(editTextBox.Text);
+                        }
                     }
                 }
+
+                catch
+                {
+                    // Ignore
+                }
+
+                
 
                 displayTextBlock.Text = editTextBox.Text;
                 displayTextBlock.Visibility = System.Windows.Visibility.Visible;
@@ -83,8 +93,6 @@ namespace SashaNote
             // First, check to make sure we're note returning from
             // an interrupted session, redirected from MainPage.xaml.
             // We'll check IsolatedStorageSettings
-
-            
 
             string state = "";
             if (settings.Contains("state"))
@@ -130,13 +138,23 @@ namespace SashaNote
 
             var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
 
-            using (var file = appStorage.OpenFile(fileName, System.IO.FileMode.Open))
+            try
             {
-                using (StreamReader sr = new StreamReader(file))
+                using (var file = appStorage.OpenFile(fileName, System.IO.FileMode.Open))
                 {
-                    displayTextBlock.Text = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+                        displayTextBlock.Text = sr.ReadToEnd();
+                    }
                 }
             }
+
+            catch
+            {
+                // To be implemented
+            }
+
+            
         }
 
         private void bindEdit(string content)
@@ -157,7 +175,16 @@ namespace SashaNote
         {
             var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
 
-            appStorage.DeleteFile(fileName);
+            try
+            {
+                appStorage.DeleteFile(fileName);
+            }
+            catch
+            {
+                // To be implemented
+            }
+
+            
 
             navigateBack();
         }
