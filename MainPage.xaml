@@ -37,7 +37,9 @@
                             <HyperlinkButton Name="noteLocation" 
                                              FontSize="30"
                                              HorizontalAlignment="Left"
-                                             Content="{Binding location}" />
+                                             Content="{Binding location}"
+                                             Tag="{Binding FileName}"
+                                             Click="noteLocation_Click"/>
                             <TextBlock Name="noteDateCreated"
                                        Text="{Binding DateCreated}"
                                        Margin="10"/>

@@ -11,6 +11,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Device.Location;
+using System.IO.IsolatedStorage;
+using System.Text;
+using System.IO;
 
 namespace SashaNote
 {
@@ -59,7 +62,43 @@ namespace SashaNote
         private void AppBar_Save_Click(object sender, EventArgs e)
         {
             // Save the new note
+            if (location.Trim().Length == 0)
+            {
+                location = "unknown";
+            }
 
+            // Construct the name of the file
+            StringBuilder sb = new StringBuilder();
+            sb.Append(DateTime.Now.Year);
+            sb.Append("_");
+            sb.Append(String.Format("{0:00}", DateTime.Now.Month));
+            sb.Append("_");
+            sb.Append(String.Format("{0:00}", DateTime.Now.Day));
+            sb.Append("_");
+            sb.Append(String.Format("{0:00}", DateTime.Now.Hour));
+            sb.Append("_");
+            sb.Append(String.Format("{0:00}", DateTime.Now.Minute));
+            sb.Append("_");
+            sb.Append(String.Format("{0:00}", DateTime.Now.Second));
+            sb.Append("_");
+
+            location = location.Replace(" ", "-");
+            location = location.Replace(", ", "_");
+            sb.Append(location);
+            sb.Append(".txt");
+
+            // Now we have everything we need  to write the file to Isolated Storage
+            var appStorage = IsolatedStorageFile.GetUserStoreForApplication();
+
+            using (var fileStream = appStorage.OpenFile(sb.ToString(), System.IO.FileMode.Create))
+            {
+                using (StreamWriter sw = new StreamWriter(fileStream))
+                {
+                    sw.WriteLine(editTextBox.Text);
+                }
+            }
+
+            // Finished, navigate back to the MainPage
             navigateBack();
         }
 

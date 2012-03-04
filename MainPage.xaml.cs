@@ -104,10 +104,19 @@ namespace SashaNote
                 location = location.Replace("-", " ");
                 location = location.Substring(0, location.Length - 4);
 
-                notes.Add(new note() { location = location, DateCreated = dateCreated.ToLongDateString() });
+                notes.Add(new note() { location = location, DateCreated = dateCreated.ToLongDateString(), FileName = fileName});
             }
 
             noteListBox.ItemsSource = notes;
+        }
+
+        private void noteLocation_Click(object sender, RoutedEventArgs e)
+        {
+            HyperlinkButton clickedLink = (HyperlinkButton)sender;
+
+            string uri = String.Format("/SashaNote;component/ViewEdit.xaml?id={0}", clickedLink.Tag);
+
+            NavigationService.Navigate(new Uri(uri, UriKind.Relative));
         }
     }
 }

@@ -15,5 +15,6 @@ namespace SashaNote
     {
         public string location { get; set; }
         public string DateCreated { get; set; }
+        public string FileName { get; set; }
     }
 }
